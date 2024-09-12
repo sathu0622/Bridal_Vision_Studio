@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { uploadImage, getAllImages } = require('../controllers/product_Controllers');
+const { uploadImage, getAllImages, updateProduct, deleteProduct } = require('../controllers/product_Controllers');
 
 const router = express.Router();
 
@@ -20,5 +20,7 @@ const upload = multer({ storage: storage });
 // Routes
 router.post('/upload', upload.single('file'), uploadImage);
 router.get('/getImages', getAllImages);
+router.put('/update/:id', updateProduct);
+router.delete('/delete/:id', deleteProduct);
 
 module.exports = router;
