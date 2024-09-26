@@ -65,14 +65,3 @@ function Footer() {
 }
 
 export default Footer;
-
-{
-  /* <li>
-<details>
-    <summary className='flex items-center cursor-pointer'>Services</summary>
-    <p>Bridal Dresses</p>
-    <p>Bridal Jewellery</p>
-    <p>Bridal Full Package</p>
-</details>
-</li> */
-}
