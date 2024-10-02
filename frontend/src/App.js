@@ -5,6 +5,7 @@ import AdminView from './productManagment/AdminView';
 import FrontPage from './pages/FrontPage'
 
 import '../src/styles.css';
+import TryOneFull from './pages/TryOneFull';
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/view-product" element={<ViewProduct />} />
         <Route path="/admin-product" element={<AdminView />} />
+        <Route path="/tryon" element={<TryOneFull />} />
       </Routes>
     </Router>
   );

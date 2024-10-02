@@ -7,7 +7,7 @@ const MySwal = withReactContent(Swal);
 const Fitton = ({ image }) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [alertShown, setAlertShown] = useState(false);
-
+  console.log(image)
   const convertImageToBase64 = (imageFile) => {
     return new Promise((resolve, reject) => {
       if (imageFile instanceof Blob) {
@@ -23,6 +23,7 @@ const Fitton = ({ image }) => {
 
   useEffect(() => {
     const sendImageToBackend = async () => {
+      
       try {
         let imageData;
 
@@ -66,7 +67,7 @@ const Fitton = ({ image }) => {
     };
 
     if (image) {
-      sendImageToBackend(); // Send the image only if it exists
+      sendImageToBackend(); 
     }
   }, [image]);
 

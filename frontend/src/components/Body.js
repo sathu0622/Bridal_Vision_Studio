@@ -2,6 +2,8 @@ import React from 'react';
 import Bgg from '../assests/bgg.png';
 import Header from './Header';
 import Footer from './Footer';
+import Note from './Note';
+//import Bgg3 from '../assests/bgg3.jpg'
 
 function Body() {
   return (
@@ -27,6 +29,13 @@ function Body() {
         
         </div>
       </div>
+      <br />
+      <br />
+      <hr />
+      <Note/>
+      {/* <div className='m-4'>
+      <img src={Bgg3} alt="Description" className="object-cover w-full h-full rounded-lg " />
+    </div> */}
       <Footer/>
     </>
   );
