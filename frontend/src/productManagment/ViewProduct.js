@@ -221,13 +221,13 @@ const ViewProduct = () => {
                                     <p className="text-gray-700 mt-2">
                                         {image.discount ? (
                                             <>
-                                                <span className="line-through text-gray-500">${image.price}</span>
+                                                <span className="line-through text-gray-500">Rs.{image.price}</span>
                                                 <span className="ml-2 font-bold" style={{ color: '#D4AF37' }}>
-                                                    ${((1 - image.discount / 100) * image.price).toFixed(2)}
+                                                    Rs.{((1 - image.discount / 100) * image.price).toFixed(2)}
                                                 </span>
                                             </>
                                         ) : (
-                                            <span style={{ color: '#D4AF37' }}>${image.price}</span>
+                                            <span style={{ color: '#D4AF37' }}>Rs.{image.price}</span>
                                         )}
                                     </p>
                                     <p className="text-gray-600 text-sm mt-2">Size: {image.size}</p>
