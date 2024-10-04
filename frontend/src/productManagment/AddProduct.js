@@ -16,12 +16,12 @@ const AddProduct = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [gender, setGender] = useState('Male');
     const [category, setCategory] = useState('Saree');
-
+    const userEmail = sessionStorage.getItem('userEmail');
 
     // Validation state
     const [errors, setErrors] = useState({});
 
-    const colors = ['Red', 'Blue', 'Yellow', 'White', 'Black'];
+    const colors = ['Black','White','Red', 'Blue', 'Yellow'];
     const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
     const navigate = useNavigate()
@@ -115,7 +115,7 @@ const AddProduct = () => {
         <div>
             <Header />
             <div className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
-                <h2 className="text-3xl font-bold mb-6 text-center text-green-800">Add New Product</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center text-purple-800">Add New Product</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
@@ -144,7 +144,7 @@ const AddProduct = () => {
                                     <button
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
-                                        className={`px-4 py-2 border border-gray-300 rounded-lg ${selectedSize === size ? 'bg-green-200' : 'bg-gray-100'}`}
+                                        className={`px-4 py-2 border border-gray-300 rounded-lg ${selectedSize === size ? 'bg-purple-200' : 'bg-gray-100'}`}
                                     >
                                         {size}
                                     </button>
@@ -157,7 +157,7 @@ const AddProduct = () => {
                                     <button
                                         key={color}
                                         onClick={() => setSelectedColour(color)}
-                                        className={`px-4 py-2 border border-gray-300 rounded-lg ${selectedColour === color ? 'bg-green-200' : 'bg-gray-100'}`}
+                                        className={`px-4 py-2 border border-gray-300 rounded-lg ${selectedColour === color ? 'bg-purple-200' : 'bg-gray-100'}`}
                                     >
                                         {color}
                                     </button>
@@ -192,7 +192,7 @@ const AddProduct = () => {
                         <h3 className="text-xl font-semibold mb-4">Upload Img</h3>
                         <label
                             htmlFor="file-upload"
-                            className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg cursor-pointer"
+                            className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-500 transition"
                         >
                             Choose File
                         </label>
@@ -259,7 +259,7 @@ const AddProduct = () => {
                 <div className="flex justify-end mt-8">
                     <button 
                         onClick={handleUpload} 
-                        className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-500 transition"
                     >
                         Add Product
                     </button>

@@ -77,7 +77,7 @@ const Note = () => {
 
           {/* Get Started Button */}
           <button className="mt-6 bg-black text-white py-3 px-6 rounded-md hover:bg-gray-800">
-            Get Started
+            <a href="/view-product">Get Started</a>
           </button>
         </div>
       </div>

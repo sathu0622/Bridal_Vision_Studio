@@ -20,10 +20,14 @@ function Body() {
             </p>
             <div className="flex flex-col md:flex-row md:h-100 md:w-15 md:justify-center space-y-3 md:space-y-0 md:space-x-3">
               <button className="border-2 p-8 border-red-400 rounded-md hover:bg-red-400 hover:transition-transform">
+                <a href='/login'>
                 Login
+                </a>
               </button>
               <button className="border-2 p-8 border-red-400 rounded-md hover:bg-red-400 hover:transition-transform">
-                Sign Up
+              <a href='/register'>
+              Sign Up
+                </a>
               </button>
             </div>
           </div>

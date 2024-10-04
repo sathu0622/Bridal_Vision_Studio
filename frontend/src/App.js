@@ -6,7 +6,10 @@ import SkinToneDetector from './skinToneDetector/SkinToneDetector';
 import FrontPage from './pages/FrontPage'
 import '../src/styles.css';
 import TryOneFull from './pages/TryOneFull';
-
+import Login from './Components_S/Login';
+import Profile from './Components_S/Profile';
+import Register from './Components_S/Register';
+import CustomerDetails from './Components_S/CustomerDetails';
 
 
 function App() {
@@ -19,6 +22,10 @@ function App() {
         <Route path="/admin-product" element={<AdminView />} />
         <Route path="/skinToneDetector" element={<SkinToneDetector />} />
         <Route path="/tryon" element={<TryOneFull />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/customerDetails" element={<CustomerDetails />} />
       </Routes>
     </Router>
   );
