@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Bars4Icon } from "@heroicons/react/24/solid";
-import BVS from "../assests/BVS.png";
+import BVS from "../assests/logo1.png";
 
 function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -10,7 +10,7 @@ function Header() {
     <>
       <header className="flex justify-between px-5 py-6  relative z-20 h-26 comName bg-stone-">
       <div className="flex items-center space-x-4">
-          <img src={BVS} alt="BVS Logo" className="w-20 h-20 mt-4 border-r-inherit mb-2" />
+          <img src={BVS} alt="BVS Logo" className="w-30 h-20 mt-4 border-r-inherit mb-2" />
           <h3 className="font-bold text-lg mt-2">
             <Link to="/">BRIDAL VISION STUDIO</Link>
           </h3>
@@ -18,7 +18,7 @@ function Header() {
         <nav className="hidden md:block mt-10">
           <ul className="flex">
             <li className="px-2">
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
             </li>
             <li className="px-2">
               <Link to="/about">About</Link>
