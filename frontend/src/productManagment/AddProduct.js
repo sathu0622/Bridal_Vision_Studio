@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
     const [file, setFile] = useState(null);
     const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [discount, setDiscount] = useState('');
@@ -16,6 +17,7 @@ const AddProduct = () => {
     const [gender, setGender] = useState('Male');
     const [category, setCategory] = useState('Saree');
 
+
     // Validation state
     const [errors, setErrors] = useState({});
 
@@ -24,18 +26,51 @@ const AddProduct = () => {
 
     const navigate = useNavigate()
 
-    // Validate form fields
     const validateForm = () => {
         let errors = {};
+    
+        // String validation for product name
+        const namePattern = /^[a-zA-Z\s]+$/;
+        if (!name.trim()) {
+            errors.name = "Product name is required";
+        } else if (!namePattern.test(name)) {
+            errors.name = "Product name can only contain letters and spaces";
+        }
 
-        if (!name.trim()) errors.name = "Product name is required";
-        if (!quantity || quantity <= 0) errors.quantity = "Quantity must be a positive number";
-        if (!price || price <= 0) errors.price = "Price must be a positive number";
-        if (!selectedColour) errors.colour = "Please select a color";
-        if (!selectedSize) errors.size = "Please select a size";
-        if (!file) errors.file = "Please upload an image";
-        if (discount && (isNaN(discount) || discount < 0 || discount > 100)) errors.discount = "Discount must be a number between 0 and 100";
-
+        if (!description.trim()) {
+            errors.description = "Product description is required";
+        } else if (!namePattern.test(description)) {
+            errors.description = "Product description can only contain letters and spaces";
+        }
+    
+        // Number validation for quantity
+        if (!quantity || isNaN(quantity) || quantity <= 0) {
+            errors.quantity = "Quantity must be a positive number";
+        }
+    
+        // Number validation for price
+        if (!price || isNaN(price) || price <= 0) {
+            errors.price = "Price must be a positive number";
+        }
+    
+        // Number validation for discount
+        if (discount && (isNaN(discount) || discount < 0 || discount > 100)) {
+            errors.discount = "Discount must be a number between 0 and 100";
+        }
+    
+        // Ensure color and size are selected
+        if (!selectedColour) {
+            errors.colour = "Please select a color";
+        }
+        if (!selectedSize) {
+            errors.size = "Please select a size";
+        }
+    
+        // Ensure image file is uploaded
+        if (!file) {
+            errors.file = "Please upload an image";
+        }
+    
         setErrors(errors);
         return Object.keys(errors).length === 0; // Returns true if no errors
     };
@@ -46,6 +81,7 @@ const AddProduct = () => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('name', name);
+        formData.append('description', description);
         formData.append('quantity', quantity);
         formData.append('price', price);
         formData.append('discount', discount);  // Include discount
@@ -96,8 +132,12 @@ const AddProduct = () => {
 
                             <textarea
                                 placeholder="Description Product"
+                                value={description}  // Bind the value to the state
+                                onChange={e => setDescription(e.target.value)}  // Update state when the user types
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             ></textarea>
+                            {errors.description && <p className="text-red-600">{errors.description}</p>}
+
 
                             <div className="flex space-x-4">
                                 {sizes.map(size => (
