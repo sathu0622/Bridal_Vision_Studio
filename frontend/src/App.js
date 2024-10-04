@@ -10,7 +10,11 @@ import Login from './Components_S/Login';
 import Profile from './Components_S/Profile';
 import Register from './Components_S/Register';
 import CustomerDetails from './Components_S/CustomerDetails';
-
+import Review from "./pages/Review";
+import ReviewForm from "./pages/formreview";
+import ReviewList from "./pages/listreview";
+import ReviewView from "./pages/reviewview";
+import UserReview from "./pages/Userreviewlist";
 
 function App() {
   return (
@@ -26,6 +30,14 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/customerDetails" element={<CustomerDetails />} />
+
+        <Route path="review" element={<Review/>} />
+        <Route path="/formreview" element={<ReviewForm/>}/>
+        <Route path="/listreview" element={<ReviewList/>}/>
+        <Route path="/reviewview" element={<ReviewView/>}/>
+        <Route path="//Userreviewlist" element={<UserReview/>}/>
+        
+
       </Routes>
     </Router>
   );

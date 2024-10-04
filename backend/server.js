@@ -6,6 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const productRoutes = require('./routes/productRoutes');
 const UserRouter = require('./routes/UserRouter')
+const reviewRoutes = require("./routes/reviewRoutes");
 
 dotenv.config();
 
@@ -30,6 +31,9 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Use product routes
 app.use('/api/products', productRoutes);
+
+// Review routes
+app.use("/api", reviewRoutes);
 
 app.use('/auth', UserRouter);
 app.use(cookieParser());

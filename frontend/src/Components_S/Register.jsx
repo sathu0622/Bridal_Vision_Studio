@@ -1,3 +1,4 @@
+/*
 import React, { useState } from "react";
 import Axios from "axios";
 import { Button, Checkbox, Form, Input, message } from "antd";
@@ -192,10 +193,186 @@ const Register = () => {
   
 
 export default Register
+*/
 
+import React, { useState } from "react";
+import Axios from "axios";
+import { Button, Form, Input, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
 
+  const handleSubmit = (values) => {
+    Axios.post("http://localhost:5000/auth/register", {
+      username: values.username,
+      email: values.email,
+      number: values.number,
+      address: values.address,
+      password: values.password,
+    })
+      .then((response) => {
+        if (response.data.status) {
+          navigate("/login");
+        } else {
+          message.error("Email already exists");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  const validatePassword = (_, value) => {
+    if (value && value !== password) {
+      return Promise.reject(new Error("Passwords do not match"));
+    }
+    return Promise.resolve();
+  };
 
+  return (
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="container bg-white p-6 rounded-md shadow-lg max-w-md text-center">
+        <h2 className="text-2xl font-bold mb-5">Sign Up</h2>
+        <br/>
+        <Form
+          name="register"
+          className="flex flex-col gap-4"
+          initialValues={{ remember: true }}
+          onFinish={handleSubmit}
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please enter your Username!" }]}
+          >
+            <Input
+              name="username"
+              size="large"
+              placeholder="Username"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Item>
 
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Please enter your Email!" },
+              {
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Please enter a valid email address!",
+              },
+            ]}
+          >
+            <Input
+              name="email"
+              size="large"
+              placeholder="Email"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Phone Number"
+            name="number"
+            rules={[
+              { required: true, message: "Please enter your phone number!" },
+              {
+                pattern: /^(0)[0-9]{9}$/,
+                message: "Please enter a valid phone number!",
+              },
+            ]}
+          >
+            <Input
+              name="number"
+              size="large"
+              placeholder="Phone Number"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setNumber(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[{ required: true, message: "Please enter your Address!" }]}
+          >
+            <Input
+              name="address"
+              size="large"
+              placeholder="Address"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: "Please provide a password!" },
+              {
+                min: 8,
+                max: 15,
+                message: "Password must be at least 8 characters long!",
+              },
+            ]}
+          >
+            <Input.Password
+              name="password"
+              size="large"
+              placeholder="Password"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Confirm Password"
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password!" },
+              { validator: validatePassword },
+            ]}
+          >
+            <Input.Password
+              size="large"
+              placeholder="Confirm Password"
+              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </Form.Item>
+
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="bg-purple-600 text-white rounded-md w-full p-2 mt-4"
+          >
+            Register
+          </Button>
+
+          <div className="mt-4 text-gray-500">
+            Already have an Account?{" "}
+            <Link to="/login" className="text-purple-600">
+              Log In
+            </Link>
+          </div>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
