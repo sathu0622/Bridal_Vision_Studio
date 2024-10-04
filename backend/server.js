@@ -23,6 +23,16 @@ mongoose.connect(process.env.MONGODB_URI)
 // Use product routes
 app.use('/api/products', productRoutes);
 
+app.post('/api/update-skin-tone-gender', (req, res) => {
+    const { skin_tone, gender } = req.body;
+
+    console.log('Received skin tone:', skin_tone);
+    console.log('Received gender:', gender);
+
+    // You can now store this data in a database or use it as needed
+    res.json({ message: 'Data received successfully' });
+});
+
 // Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../frontend/build')));
