@@ -7,32 +7,36 @@ const MySwal = withReactContent(Swal);
 const Fitton = ({ image }) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [alertShown, setAlertShown] = useState(false);
-  console.log(image)
+
   const convertImageToBase64 = (imageFile) => {
     return new Promise((resolve, reject) => {
       if (imageFile instanceof Blob) {
         const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result.split(",")[1]); // Get base64 string without the data:image prefix
+        reader.onloadend = () => resolve(reader.result.split(",")[1]); // Extract base64 without data:image prefix
         reader.onerror = reject;
         reader.readAsDataURL(imageFile);
       } else {
-        reject("Provided image is not a File or Blob.");
+        reject("Provided image is not a valid File or Blob.");
       }
     });
   };
 
   useEffect(() => {
     const sendImageToBackend = async () => {
-      
       try {
         let imageData;
 
-        if (image instanceof File) {
+        if (image instanceof File || image instanceof Blob) {
           imageData = await convertImageToBase64(image);
-        } else if (typeof image === "string") {
-          imageData = image;
+        } else if (typeof image === "string" && image.startsWith("data:image/")) {
+          imageData = image.split(",")[1]; // Handle base64 string starting with 'data:image/'
         } else {
-          console.error("Unsupported image format");
+          console.error("Unsupported image format:", image);
+          MySwal.fire({
+            title: "Error",
+            text: "Unsupported image format. Please upload a valid image.",
+            icon: "error",
+          });
           return;
         }
 
@@ -43,8 +47,6 @@ const Fitton = ({ image }) => {
           },
           body: JSON.stringify({ image: imageData }),
         });
-
-        console.log(imageData)
 
         const result = await response.json();
         if (response.ok) {
@@ -67,7 +69,7 @@ const Fitton = ({ image }) => {
     };
 
     if (image) {
-      sendImageToBackend(); 
+      sendImageToBackend();
     }
   }, [image]);
 
