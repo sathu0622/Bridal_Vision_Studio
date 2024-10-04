@@ -32,21 +32,16 @@ const Note = () => {
       <div className="w-1/2 p-10 border-slate-300">
         <h2 className="text-4xl font-bold text-gold-600">BVS </h2>
         <p className="mt-4 text-lg text-gray-500">
-        Start with us to try the <b>fitton</b> , personal bridal recommendations, sparkling jewels & more!
+          Start with us to try the <b>fitton</b>, personal bridal recommendations, sparkling jewels & more!
         </p>
 
         <div className="mt-6">
-          <h3 className="text-2xl font-semibold">
-            {slides[currentSlide].title}
-          </h3>
+          <h3 className="text-2xl font-semibold">{slides[currentSlide].title}</h3>
           <p className="mt-2 text-gray-700">{slides[currentSlide].content}</p>
 
           {/* Slide controls */}
           <div className="flex justify-between items-center mt-6">
-            <button
-              className="text-gray-500 hover:text-gray-700"
-              onClick={handlePrevSlide}
-            >
+            <button className="text-gray-500 hover:text-gray-700" onClick={handlePrevSlide}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -62,10 +57,7 @@ const Note = () => {
                 />
               </svg>
             </button>
-            <button
-              className="text-gray-500 hover:text-gray-700"
-              onClick={handleNextSlide}
-            >
+            <button className="text-gray-500 hover:text-gray-700" onClick={handleNextSlide}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -92,7 +84,7 @@ const Note = () => {
 
       {/* Right Side Image */}
       <div
-        className="w-1/2 h-screen bg-no-repeat bg-cover bg-center rounded-lg shadow-md"
+        className="w-1/2 h-96 bg-no-repeat bg-cover bg-center rounded-lg shadow-md" // Changed height here
         style={{ backgroundImage: `url(${Bgg2})` }}
       ></div>
     </div>
