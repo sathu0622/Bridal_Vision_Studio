@@ -195,11 +195,13 @@ const Register = () => {
 export default Register
 */
 
+/*
 import React, { useState } from "react";
 import Axios from "axios";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import './register.css';
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -249,18 +251,13 @@ const Register = () => {
           initialValues={{ remember: true }}
           onFinish={handleSubmit}
         >
+        <div className="register-form">  
+         <div style={{marginRight:'-40px'}}> 
           <Form.Item
             label="Username"
             name="username"
             rules={[{ required: true, message: "Please enter your Username!" }]}
           >
-            <Input
-              name="username"
-              size="large"
-              placeholder="Username"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
-              onChange={(e) => setUsername(e.target.value)}
-            />
           </Form.Item>
 
           <Form.Item
@@ -274,13 +271,6 @@ const Register = () => {
               },
             ]}
           >
-            <Input
-              name="email"
-              size="large"
-              placeholder="Email"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
-              onChange={(e) => setEmail(e.target.value)}
-            />
           </Form.Item>
 
           <Form.Item
@@ -293,29 +283,14 @@ const Register = () => {
                 message: "Please enter a valid phone number!",
               },
             ]}
-          >
-            <Input
-              name="number"
-              size="large"
-              placeholder="Phone Number"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
-              onChange={(e) => setNumber(e.target.value)}
-            />
+          > 
           </Form.Item>
 
           <Form.Item
             label="Address"
             name="address"
             rules={[{ required: true, message: "Please enter your Address!" }]}
-          >
-            <Input
-              name="address"
-              size="large"
-              placeholder="Address"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </Form.Item>
+          > </Form.Item>
 
           <Form.Item
             label="Password"
@@ -328,16 +303,7 @@ const Register = () => {
                 message: "Password must be at least 8 characters long!",
               },
             ]}
-          >
-            <Input.Password
-              name="password"
-              size="large"
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Item>
-
+          ></Form.Item>
           <Form.Item
             label="Confirm Password"
             name="confirmPassword"
@@ -346,14 +312,58 @@ const Register = () => {
               { required: true, message: "Please confirm your password!" },
               { validator: validatePassword },
             ]}
-          >
+          ></Form.Item>
+
+          </div>
+          <div>
+
+            <Input
+              name="username"
+              size="large"
+              placeholder="Username"
+              className="register-input-field"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <Input
+              name="email"
+              size="large"
+              placeholder="Email"
+              className="register-input-field"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              name="number"
+              size="large"
+              placeholder="Phone Number"
+              className="register-input-field"
+              onChange={(e) => setNumber(e.target.value)}
+            />
+          
+            <Input
+              name="address"
+              size="large"
+              placeholder="Address"
+              className="register-input-field"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          
+            <Input.Password
+              name="password"
+              size="large"
+              placeholder="Password"
+              className="register-input-field"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          
             <Input.Password
               size="large"
               placeholder="Confirm Password"
-              className="w-full p-3 border border-gray-300 rounded-md text-lg"
+              className="register-input-field"
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-          </Form.Item>
+            </div>
+          </div>
 
           <Button
             type="primary"
@@ -375,4 +385,182 @@ const Register = () => {
   );
 };
 
+export default Register;
+*/
+
+import React, { useState } from "react";
+import Axios from "axios";
+import { Button, Form, Input, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import './register.css';
+ 
+const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+ 
+  const navigate = useNavigate();
+ 
+  const handleSubmit = (values) => {
+    Axios.post("http://localhost:5000/auth/register", {
+      username: values.username,
+      email: values.email,
+      number: values.number,
+      address: values.address,
+      password: values.password,
+    })
+      .then((response) => {
+        if (response.data.status) {
+          navigate("/login");
+        } else {
+          message.error("Email already exists");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+ 
+  const validatePassword = (_, value) => {
+    if (value && value !== password) {
+      return Promise.reject(new Error("Passwords do not match"));
+    }
+    return Promise.resolve();
+  };
+ 
+  return (
+<div className="register-page">
+<div className="register-container">
+<h2 className="register-title">Sign Up</h2>
+<Form
+          name="register"
+          layout="vertical"
+          className="register-form"
+          onFinish={handleSubmit}
+>
+<Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please enter your Username!" }]}
+>
+<Input
+              size="large"
+              placeholder="Enter your username"
+              onChange={(e) => setUsername(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Please enter your Email!" },
+              {
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Please enter a valid email address!",
+              },
+            ]}
+>
+<Input
+              size="large"
+              placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Form.Item
+            label="Phone Number"
+            name="number"
+            rules={[
+              { required: true, message: "Please enter your phone number!" },
+              {
+                pattern: /^(0)[0-9]{9}$/,
+                message: "Please enter a valid phone number!",
+              },
+            ]}
+>
+<Input
+              size="large"
+              placeholder="Enter your phone number"
+              onChange={(e) => setNumber(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[{ required: true, message: "Please enter your Address!" }]}
+>
+<Input
+              size="large"
+              placeholder="Enter your address"
+              onChange={(e) => setAddress(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: "Please provide a password!" },
+              {
+                min: 8,
+                max: 15,
+                message: "Password must be between 8-15 characters!",
+              },
+            ]}
+>
+<Input.Password
+              size="large"
+              placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Form.Item
+            label="Confirm Password"
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password!" },
+              { validator: validatePassword },
+            ]}
+>
+<Input.Password
+              size="large"
+              placeholder="Confirm your password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="register-input-field"
+            />
+</Form.Item>
+ 
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="register-button"
+>
+            Register
+</Button>
+ 
+          <div className="register-footer">
+            Already have an account?{" "}
+<Link to="/login" className="login-link">
+              Log In
+</Link>
+</div>
+</Form>
+</div>
+</div>
+  );
+};
+ 
 export default Register;
