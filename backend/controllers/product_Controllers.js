@@ -7,10 +7,11 @@ const uploadImage = (req, res) => {
             return res.status(400).send("No file uploaded.");
         }
 
-        const { name, quantity, price, size, colour, gender, discount, category } = req.body;
+        const { name, description, quantity, price, size, colour, gender, discount, category, sold } = req.body;
 
         ProductModel.create({
             name,
+            description,
             quantity,
             price,
             size,
@@ -18,7 +19,8 @@ const uploadImage = (req, res) => {
             image: req.file.filename,
             gender,
             discount,
-            category
+            category,
+            sold
         })
         .then(result => res.json(result))
         .catch(err => {
@@ -41,12 +43,17 @@ const getAllImages = (req, res) => {
 
 const updateProduct = (req, res) => {
     const { id } = req.params;
-    const { name, quantity, price } = req.body;
+    const { name, quantity, price, description, size, colour, discount, gender, category} = req.body;
 
-    ProductModel.findByIdAndUpdate(id, { name, quantity, price }, { new: true })
-        .then(result => res.json(result))
-        .catch(err => res.status(500).send(err));
+    ProductModel.findByIdAndUpdate(
+        id, 
+        { name, quantity, price, description, size, colour, discount, gender, category}, 
+        { new: true } 
+    )
+    .then(result => res.json(result))
+    .catch(err => res.status(500).send(err));
 };
+
 
 const deleteProduct = (req, res) => {
     const { id } = req.params;

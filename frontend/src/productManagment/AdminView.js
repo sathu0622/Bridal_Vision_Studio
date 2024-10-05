@@ -3,7 +3,7 @@ import autoTable from 'jspdf-autotable';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';  // Import for table generation
-import Header from '../components/Header';
+import Header from '../components/AdminHeader';
 import Footer from '../components/Footer';
 import UpdateProductPopup from './UpdateProductPopup ';
 
@@ -132,11 +132,11 @@ const AdminView = () => {
             <Header />
             <div className="max-w-6xl mx-auto p-8 bg-white shadow-md rounded-lg">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-bold text-green-800">Admin View</h2>
+                    <h2 className="text-3xl font-bold text-purple-800">Product Details</h2>
                     <div className="flex space-x-4">
                         <a 
                             href="/add-product" 
-                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300"
+                            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
                         >
                             Add Product
                         </a>
@@ -218,8 +218,8 @@ const AdminView = () => {
                             key={index + 1}
                             onClick={() => handlePageChange(index + 1)}
                             className={`px-4 py-2 mx-1 rounded-lg ${
-                                currentPage === index + 1 ? 'bg-green-600 text-white' : 'bg-gray-200'
-                            } hover:bg-green-700`}
+                                currentPage === index + 1 ? 'bg-purple-600 text-white' : 'bg-gray-200'
+                            } hover:bg-purple-700`}
                         >
                             {index + 1}
                         </button>
