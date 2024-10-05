@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddProduct from './productManagment/AddProduct';
 import ViewProduct from './productManagment/ViewProduct';
@@ -10,9 +11,19 @@ import Login from './Components_S/Login';
 import Profile from './Components_S/Profile';
 import Register from './Components_S/Register';
 import CustomerDetails from './Components_S/CustomerDetails';
-
+import CartPage from './productManagment/CartPage'
+import Review from "./pages/Review";
+import ReviewForm from "./pages/formreview";
+import ReviewList from "./pages/listreview";
+import ReviewView from "./pages/reviewview";
+import UserReview from "./pages/Userreviewlist";
 
 function App() {
+
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+});
   return (
     <Router>
       <Routes>
@@ -26,6 +37,15 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/customerDetails" element={<CustomerDetails />} />
+        {/* <Route path="/cart" element={<CartPage />} /> */}
+        <Route path="/" element={<ViewProduct cart={cart} setCart={setCart} />} />
+        <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
+
+        <Route path="review" element={<Review/>} />
+        <Route path="/formreview" element={<ReviewForm/>}/>
+        <Route path="/listreview" element={<ReviewList/>}/>
+        <Route path="/reviewview" element={<ReviewView/>}/>
+        <Route path="//Userreviewlist" element={<UserReview/>}/>
       </Routes>
     </Router>
   );

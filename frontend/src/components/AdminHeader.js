@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BVS from "../assests/logo1.png";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const AdminHeader = () => {
+
+
+    const navigate = useNavigate()
+
+
+const handleLogout =()=>{
+    axios.get('http://localhost:5000/auth/logout')
+    .then(res => {
+      if(res.data.status){
+        sessionStorage.removeItem('userEmail');
+        navigate('/login')
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  }
     return (
         <header className="bg-purple-500 text-white py-4 px-6"> {/* Added padding on left and right */}
             <div className="container mx-auto flex justify-between items-center">
@@ -23,11 +44,12 @@ const AdminHeader = () => {
                             <Link to="/admin-product" className="hover:text-gray-200">Product Details</Link>
                         </li>
                         <li>
-                            <Link to="/payment-details" className="hover:text-gray-200">Payment Details</Link>
+                            <Link to="/listreview" className="hover:text-gray-200">Feedback</Link>
                         </li>
                         <li>
-                            <Link to="/feedback" className="hover:text-gray-200">Feedback</Link>
+                        <div className="Pro-header-component" onClick={handleLogout}>Logout</div>
                         </li>
+
                     </ul>
                 </nav>
             </div>

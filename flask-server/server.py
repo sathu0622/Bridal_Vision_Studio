@@ -1,4 +1,4 @@
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, jsonify, request 
 from flask_cors import CORS
 import cv2
 import cvzone
@@ -41,6 +41,7 @@ def generate_frames():
                 x_offset = x - int(w * 0.1)  
                 y_offset = y + int(h * 1.0)  
 
+                # Adjust the overlay if it goes beyond the frame
                 x_offset = max(x_offset, 0)
                 y_offset = max(y_offset, 0)
                 if x_offset + overlay_resize.shape[1] > frame.shape[1]:
@@ -61,23 +62,31 @@ def generate_frames():
 @app.route('/api/overlay', methods=['POST'])
 def overlay_image():
     global overlay
-    data = request.get_json()
-    image_base64 = data.get('image')
-    
-    if image_base64:
-        image_data = base64.b64decode(image_base64)
-        np_arr = np.frombuffer(image_data, np.uint8)
-        overlay = cv2.imdecode(np_arr, cv2.IMREAD_UNCHANGED)
+    try:
+        data = request.get_json()
+        image_base64 = data.get('image')
+        
+        if image_base64:
+            # Decode the base64 image
+            image_data = base64.b64decode(image_base64)
+            np_arr = np.frombuffer(image_data, np.uint8)
+            
+            # Handle transparency (e.g., PNG with alpha channel)
+            overlay = cv2.imdecode(np_arr, cv2.IMREAD_UNCHANGED)
 
-        if overlay is None:
-            print("Overlay image could not be loaded.")
-            return jsonify({"error": "Could not decode overlay image."}), 400
+            if overlay is None:
+                print("Overlay image could not be loaded.")
+                return jsonify({"error": "Could not decode overlay image."}), 400
 
-        print("Overlay image successfully set.")
-        return jsonify({"message": "Overlay image set successfully."}), 200
-    else:
-        print("No image data received.")
-        return jsonify({"error": "No image data provided."}), 400
+            print("Overlay image successfully set.")
+            return jsonify({"message": "Overlay image set successfully."}), 200
+        else:
+            print("No image data received.")
+            return jsonify({"error": "No image data provided."}), 400
+
+    except Exception as e:
+        print(f"Error processing overlay image: {str(e)}")
+        return jsonify({"error": "An error occurred while processing the image."}), 500
 
 @app.route('/video_feed')
 def video_feed():

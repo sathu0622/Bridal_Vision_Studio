@@ -4,6 +4,10 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Poster from "../assests/poster.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import Fitton from '../components/Fitton';
+
 
 const ViewProduct = () => {
     const [images, setImages] = useState([]);
@@ -14,9 +18,15 @@ const ViewProduct = () => {
     const [sizeFilter, setSizeFilter] = useState({
         xsmall: false, small: false, medium: false, large: false, xlarge: false, xxlarge: false
     });
-
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem("cart");
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+    const [quantity, setQuantity] = useState(1); 
     const categories = ["All", "Coat", "Saree", "Jewellery", "Earring"];
     const userEmail = sessionStorage.getItem("userEmail");
+    const [showModal, setShowModal] = useState(false); // Modal state
+    const [selectedImage, setSelectedImage] = useState(null); // Image selected for Try-On
 
     // Fetch images from the server on component mount
     useEffect(() => {
@@ -27,7 +37,21 @@ const ViewProduct = () => {
                 console.log(userEmail);
             })
             .catch(err => console.error(err));
-    }, [userEmail]);
+    }, [userEmail]);        const addToCart = (image) => {
+        const existingItem = cart.find(item => item._id === image._id);
+        if (existingItem) {
+            setCart(cart.map(item =>
+                item._id === image._id ? { ...item, quantity: item.quantity + quantity } : item
+            ));
+        } else {
+            setCart([...cart, { ...image, quantity }]);
+        }
+
+        localStorage.setItem("cart", JSON.stringify([...cart, { ...image, quantity }]));
+
+        toast.success(`${image.name} added to cart! Quantity: ${quantity}`);
+        setQuantity(1); 
+    };
 
     // Handle category selection change
     const handleCategoryChange = (category) => setSelectedCategory(category);
@@ -57,7 +81,7 @@ const ViewProduct = () => {
                 (!genderFilter.women && !genderFilter.men)
             ));
         }
-
+    
         // Filter by size
         const sizeMatch = Object.values(sizeFilter).some(isSelected => isSelected)
             ? filtered.some(image => (
@@ -99,6 +123,18 @@ const ViewProduct = () => {
         setSelectedCategory("All");
         setSearchQuery("");
     };
+
+    const handleImageOverlay = (image) => {
+        setSelectedImage(image); // Set the selected image for the modal
+        setShowModal(true); // Show the modal
+      };
+    
+      const closeModal = () => {
+        setShowModal(false);
+        setSelectedImage(null);
+      };
+
+      
 
     return (
         <div>
@@ -222,10 +258,21 @@ const ViewProduct = () => {
                                 <div className="flex items-center justify-between mt-4">
                                     <button
                                         className="px-4 py-2 text-sm font-medium text-white bg-purple-500 hover:bg-purple-600 rounded-md transition"
-                                        onClick={() => console.log('Buy Now')}
+                                        onClick={() => addToCart(image)}
+
                                     >
                                         Add to Cart
                                     </button>
+                                    {image.category === "Jewellery" && (
+                    <button
+                      className="px-4 py-2 text-sm font-medium text-white bg-purple-500 hover:bg-purple-600 rounded-md transition"
+                      onClick={() => handleImageOverlay(image)}
+                    >
+                      Try Fit On
+                    </button>
+                  )}
+
+
                                 </div>
                             </div>
                         </div>
