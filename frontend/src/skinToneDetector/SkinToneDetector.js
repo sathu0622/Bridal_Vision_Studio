@@ -57,7 +57,7 @@ const SkinToneDetector = () => {
       }
   
       toast.success(`Successfully detected`);
-      let detectedGender = gender;
+      let detectedGender = gender === 'Male' ? 'Female' : 'Male';
   
       setSkinTone(skin_tone);
       setGender(detectedGender);
@@ -199,7 +199,7 @@ const SkinToneDetector = () => {
                 </div>
               ))
             ) : (
-              <p>No dresses found for the selected skin tone and gender.</p>
+              <p>No dresses found.</p>
             )}
           </div>
 
@@ -217,7 +217,7 @@ const SkinToneDetector = () => {
                 </div>
               ))
             ) : (
-              <p>No jewelry found for the selected skin tone and gender.</p>
+              <p>No jewelry found.</p>
             )}
           </div>
         </div>
